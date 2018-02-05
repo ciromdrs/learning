@@ -15,3 +15,5 @@ p {
 a:hover{
   color:purple;
 }
+
+p,a {font-family: 'Lato', sans-serif;}
