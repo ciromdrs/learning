@@ -1,0 +1,17 @@
+p {
+  color: red;
+  width: 200px;
+  border: 1px solid black;
+}
+
+.my-class{
+  border: 2px dashed blue;
+}
+
+#my-id{
+  border:green 2px solid;
+}
+
+a:hover{
+  color:purple;
+}
