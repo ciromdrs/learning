@@ -1,11 +1,29 @@
 package main
 
-import "fmt"
+import ("fmt"
+	"math")
 
 func main() {
-	for i:=1;i<=10;i++{
-		fmt.Println(fib(i))
+	fmt.Println("the answer is", Sqrt(397))
+}
+
+func Sqrt(x float64) float64 {
+	z := 1.0
+
+	old := z
+	z -= (z*z - x) / (2*z)
+	change := z - old
+	fmt.Println(z, "-", old, "=", change)
+
+	for math.Abs(change) > 0.01 {
+		old := z
+		z -= (z*z - x) / (2*z)
+		change = z - old
+		fmt.Println(z, "-", old, "=", change)
 	}
+	
+
+	return z
 }
 
 func fib(n int) int {
