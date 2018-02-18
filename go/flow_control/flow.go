@@ -4,11 +4,11 @@ import ("fmt"
 	"math")
 
 func main() {
-	fmt.Println("the answer is", Sqrt(397))
+	fmt.Println("the answer is", Sqrt(37))
 }
 
 func Sqrt(x float64) float64 {
-	z := 1.0
+	z := x / 2
 
 	old := z
 	z -= (z*z - x) / (2*z)
