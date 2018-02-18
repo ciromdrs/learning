@@ -4,13 +4,16 @@ import ("fmt")
 
 func main(){
     l := LinkedList{}
-	l.show()
-    n3 := Node{value:3}
-    l.add(&n3)
-    l.add(&Node{value:2})
-    l.add(&Node{value:1})
-    //~ l.show()
-    found := l.search(3)
-    fmt.Printf("%d %d \n",found.value, n3.value)
-    fmt.Printf("%p %p \n",found, &n3)
+    n3 := Node{Value:3}
+    nn3 := Node{Value:3}
+    l.Add(&n3)
+    l.Add(&Node{Value:2})
+    l.Add(&Node{Value:3})
+    l.Add(&Node{Value:1})
+    l.Add(&nn3)
+    l.Show()
+    l.Remove(3)
+    fmt.Println()
+    l.Show()
+
 }

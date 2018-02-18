@@ -3,41 +3,58 @@ package main
 import "fmt"
 
 type LinkedList struct {
-    length int
-	first *Node
+    Length int
+	First *Node
 }
 
 type Node struct {
-	value int
-	next *Node
+	Value int
+	Next *Node
 }
 
-func newNode(value int) Node {
-	n := Node{value : value}
+func NewNode(value int) Node {
+	n := Node{Value : value}
 	return n
 }
 
-func (l *LinkedList) add(n *Node) {
-    n.next = l.first
-    l.first = n
-    l.length++
+func (l *LinkedList) Add(n *Node) {
+    n.Next = l.First
+    l.First = n
+    l.Length++
 }
 
-func (l *LinkedList) show(){
-    for n := l.first; n != nil; n = n.next {
-        fmt.Print(n.value)
-        if n.next != nil {
+func (l *LinkedList) Show(){
+    for n := l.First; n != nil; n = n.Next {
+        fmt.Print(n.Value)
+        if n.Next != nil {
             fmt.Print(", ")
         }
     }
 }
 
 
-func (l *LinkedList) search(value int) *Node {
-    for n := l.first; n != nil; n = n.next {
-        if n.value == value {
+func (l *LinkedList) Search(value int) *Node {
+    for n := l.First; n != nil; n = n.Next {
+        if n.Value == value {
             return n
         }
     }
     return nil
+}
+
+func (l *LinkedList) Remove(value int) {
+    var p *Node // previous node
+    for n := l.First; n != nil; n = n.Next {
+        if n.Value == value {
+            switch n {
+            case l.First:
+                l.First = n.Next
+            default:
+                p.Next = n.Next
+            }
+            // Uncomment next line to remove all elements with this value
+            //break 
+        }
+        p = n
+    }
 }
