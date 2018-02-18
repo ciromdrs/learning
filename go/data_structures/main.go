@@ -12,7 +12,7 @@ func main(){
     l.Add(&Node{Value:1})
     l.Add(&nn3)
     l.Show()
-    l.Update(3,5)
+    l.Remove(3)
     fmt.Println()
     l.Show()
 

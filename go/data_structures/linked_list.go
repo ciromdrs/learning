@@ -52,17 +52,9 @@ func (l *LinkedList) Remove(value int) {
             default:
                 p.Next = n.Next
             }
-            // Comment next line to remove all elements with this value
+            // Uncomment next line to remove all elements with this value
             //break 
         }
         p = n
-    }
-}
-
-func (l *LinkedList) Update(old, new int){
-    for n := l.First; n != nil; n = n.Next {
-        if n.Value == old {
-            n.Value = new
-        }
     }
 }
