@@ -1,29 +1,39 @@
-package main
+package data_structures
 
 import "fmt"
 
-type LinkedList struct {
-    Length int
-	First *Node
+type Set struct {
+    Elements []LinkedList
+    Size int
 }
 
-type Node struct {
-	Value int
-	Next *Node
+func NewSet(capacity int) *Set {
+    s := &Set{}
+    s.Elements = make([]LinkedList,capacity,capacity)
+    return s
 }
 
-func NewNode(value int) Node {
-	n := Node{Value : value}
-	return n
+func (s *Set) Show() {
+    for i, l := range s.Elements {
+        fmt.Printf("|%d|-",i)
+        for n := l.First; n != nil; n = n.Next {
+            fmt.Printf(">[%d]-", n.Value)
+        }
+        fmt.Println("|")
+    }
 }
 
-func (l *LinkedList) Add(n *Node) {
-    n.Next = l.First
-    l.First = n
-    l.Length++
+func (s *Set) Add(e *Node) {
+    if s.Size < cap(s.Elements) {
+        index := e.Value % cap(s.Elements)
+        s.Elements[index].Add(e)
+        s.Size++
+    } else {
+        // TODO: re-hash
+    }
 }
 
-func (l *LinkedList) Show(){
+/*func (l *LinkedList) Show(){
     for n := l.First; n != nil; n = n.Next {
         fmt.Print(n.Value)
         if n.Next != nil {
@@ -65,4 +75,4 @@ func (l *LinkedList) Update(old, new int){
             n.Value = new
         }
     }
-}
+}*/
