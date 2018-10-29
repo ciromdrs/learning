@@ -14,3 +14,11 @@
 .glide/
 
 go/data_structures/data_structures
+
+mongodb/bin/
+
+mongodb/include/
+
+mongodb/lib/
+
+mongodb/djangomongo/polls/__pycache__/
