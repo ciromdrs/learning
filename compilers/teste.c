@@ -20,9 +20,7 @@ typedef struct AR { // activation record
     struct AR*   dyn;
 } AR;
 
-int goto_label;
-
-Param* newParam(int); // só um atalho
+int pc;
 
 int main(void){
     printf("declaração de variáveis do main\n");
@@ -34,12 +32,11 @@ int main(void){
     printf("preparando para chamar func1\n");
     // push main AR
     ARtopush = malloc(sizeof(AR));
-    {
-        Param* p = newParam(4);
-        ARtopush->params = p;
-    }
+    ARtopush->params = malloc(sizeof(Param));
+    ARtopush->params->value = 4;
+    ARtopush->params->next = NULL;
     ARtopush->ret = func_ret1;
-    goto_label = func_call;
+    pc = func_call;
     goto lbl_push_AR;
 
     lbl_func_ret1:{
@@ -47,12 +44,11 @@ int main(void){
         printf("preparando para chamar func2\n");
         // push main AR
         ARtopush = malloc(sizeof(AR));
-        {
-            Param* p = newParam(10);
-            ARtopush->params = p;
-        }
+        ARtopush->params = malloc(sizeof(Param));
+        ARtopush->params->value = 9;
         ARtopush->ret    = func_ret2;
-        goto_label = func_call;
+        
+        pc = func_call;
         goto lbl_push_AR;
     }
 
@@ -66,9 +62,19 @@ int main(void){
         printf("executando func");
         int x = ARlast->params->value; // primeiro parâmetro
         printf("(%d)\n",x);
-        func_ret_val = x+1;
-        goto_label = pop_AR;
-        goto lbl_goto_switch;
+        int y = x;
+        if (y%2 ==0) goto if_true;
+        goto if_false;
+        if_true:
+            y = y/2;
+            goto after_if;
+        if_false:
+            y = y+1;
+            goto after_if;
+        after_if:
+        func_ret_val = y;
+        printf("func retornou %d\n",func_ret_val);
+        goto lbl_pop_AR;
     }
 
     lbl_push_AR:{
@@ -80,7 +86,7 @@ int main(void){
 
     lbl_pop_AR:{
         printf("popping AR...\n");
-        goto_label = ARlast->ret;
+        pc = ARlast->ret;
         ARlast = ARlast->dyn;
         // TODO: free params
         free(ARlast->next);
@@ -89,8 +95,8 @@ int main(void){
     }
     
     lbl_goto_switch:{
-        printf("switch(%d)=",goto_label);
-        switch(goto_label){
+        printf("switch(%d)=",pc);
+        switch(pc){
             case push_AR:
                 printf("push_AR\n");
                 goto lbl_push_AR;
@@ -109,10 +115,4 @@ int main(void){
         }
     }
     
-}
-
-Param* newParam(int value){
-    Param* p = malloc(sizeof(AR));
-    p->value = value;
-    return p;
 }
