@@ -1,11 +1,12 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-#define func_call 0
-#define func_ret1 1
-#define func_ret2 2
-#define push_AR   3
-#define pop_AR    4
+#define nowhere   -1
+#define func_call  0
+#define func_ret1  1
+#define func_ret2  2
+#define push_AR    3
+#define pop_AR     4
 
 typedef struct Param { // parâmetros implementados como linkedlist
     int  value;
@@ -20,10 +21,9 @@ typedef struct AR { // activation record
     struct AR*   dyn;
 } AR;
 
-int pc;
-
 int main(void){
     printf("declaração de variáveis do main\n");
+    int pc = nowhere;
     AR* ARs = malloc(sizeof(AR));
     AR* ARlast   = ARs;
     AR* ARtopush = NULL;
@@ -59,18 +59,20 @@ int main(void){
     }
 
     lbl_func_call:{
-        printf("executando func");
-        int x = ARlast->params->value; // primeiro parâmetro
-        printf("(%d)\n",x);
+        int x = ARlast->params->value; // x é o primeiro parâmetro
+        
+        printf("executando func(%d)\n",x);
         int y = x;
-        if (y%2 ==0) goto if_true;
+        if (y%2 == 0) goto if_true;
         goto if_false;
-        if_true:
+        if_true:{
             y = y/2;
             goto after_if;
-        if_false:
+        }
+        if_false:{
             y = y+1;
             goto after_if;
+        }
         after_if:
         func_ret_val = y;
         printf("func retornou %d\n",func_ret_val);
