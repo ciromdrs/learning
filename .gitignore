@@ -14,3 +14,5 @@
 .glide/
 
 go/data_structures/data_structures
+
+*.o
